@@ -34,13 +34,13 @@ public class Map : MonoBehaviour {
 
 	void Start()
 	{
-		//StartCoroutine(show());
+		StartCoroutine(show());
 		//StartCoroutine(shownodes());
 	}
 
 	IEnumerator show()
 	{
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(10);
 
 		string line = String.Empty;
 		for (int i = 0; i < rows; i++)
@@ -50,7 +50,7 @@ public class Map : MonoBehaviour {
 				//print(i + ", " + j);
 				line += _map[i, j] + " ";
 				}
-			print(line + "\r\n");
+			print(line);
 			line = String.Empty;
 		}
 	}

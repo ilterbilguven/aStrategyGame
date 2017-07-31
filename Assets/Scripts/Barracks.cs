@@ -6,8 +6,6 @@ public class Barracks : Building
 {
 
 	public GameObject _unit;
-	public MoveUnit _moveunit;
-
 	public override void Spawn(GameObject unit)
 	{
 		_unit = Instantiate(unit);

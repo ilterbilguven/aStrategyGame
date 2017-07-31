@@ -39,7 +39,12 @@ public class FollowMouse : MonoBehaviour
 
 	private void Drop()
 	{
-		if (building.GetComponentInChildren<Building>().canBeBuilt()) building = null;
+		if (building.GetComponentInChildren<Building>().canBeBuilt())
+		{
+			building.GetComponentInChildren<Building>().updateGrid = true;
+			building = null;
+		}
+		
 	}
 
 	public void DestroyBuilding()

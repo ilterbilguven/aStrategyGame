@@ -30,7 +30,6 @@ public class MoveUnit : MonoBehaviour
 	void Update()
 	{
 
-		print(search.isStartInitialized);
 		if (search.isStartInitialized && !search.finished)
 		{
 			
