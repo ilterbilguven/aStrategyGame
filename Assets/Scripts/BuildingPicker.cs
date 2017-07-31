@@ -15,6 +15,7 @@ public class BuildingPicker : MonoBehaviour
 
 		temp_building = null;
 		temp_building = (GameObject)Instantiate(Resources.Load("Prefabs/Buildings/" + transform.gameObject.name));
+		temp_building.name = transform.gameObject.name;
 		fm.Pick(temp_building);
 
 	}

@@ -10,7 +10,12 @@ public class FollowMouse : MonoBehaviour
 	public Vector3 roundedOutput;
 	public GameObject building;
 
+	private GameObject pMenu;
 
+	void Start()
+	{
+		pMenu = GameObject.Find("ProductionMenu");
+	}
 	void Update ()
 	{
 		if (building != null)
@@ -35,6 +40,7 @@ public class FollowMouse : MonoBehaviour
 	public void Pick(GameObject b)
 	{
 		building = b;
+		pMenu.SetActive(false);
 	}
 
 	private void Drop()
@@ -43,13 +49,19 @@ public class FollowMouse : MonoBehaviour
 		{
 			building.GetComponentInChildren<Building>().updateGrid = true;
 			building = null;
+			pMenu.SetActive(true);
 		}
 		
 	}
 
 	public void DestroyBuilding()
 	{
-		if (building != null) Destroy(building);
+		if (building != null)
+		{
+			Destroy(building);
+			pMenu.SetActive(true);
+		}
+		
 	}
 
 

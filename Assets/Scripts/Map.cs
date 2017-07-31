@@ -7,8 +7,8 @@ public class Map : MonoBehaviour {
 
 	public int[,] _map;
 	
-	public int cols = 57; //x
-	public int rows = 32; //y
+	public int cols = 57;
+	public int rows = 32; 
 
 	void Awake()
 	{
@@ -34,7 +34,7 @@ public class Map : MonoBehaviour {
 
 	void Start()
 	{
-		StartCoroutine(show());
+		//StartCoroutine(show());
 		//StartCoroutine(shownodes());
 	}
 
