@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// To select objects with mouse and control them.
+/// </summary>
 public class SelectMouse : MonoBehaviour
 {
 	public GameObject infoPrefab;
 	public GameObject selected;
-	public Vector3 pos;
+	private Vector3 pos;
 	
-	// Update is called once per frame
 	void Update ()
 	{
 		pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

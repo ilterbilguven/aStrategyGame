@@ -9,7 +9,6 @@ public class MoveUnit : MonoBehaviour
 	public Map map;
 	public Search search;
 	public Graph graph;
-	public float nextMoveTime = 0;
 
 	void Start()
 	{
@@ -41,7 +40,7 @@ public class MoveUnit : MonoBehaviour
 	{
 		while (true)
 		{
-			yield return new WaitForSeconds(0.1f);
+			yield return new WaitForSeconds(0.1f); // If I don't put this, Unity hangs out like forever.
 			if (search.finished)
 			{
 				Debug.Log("finished");

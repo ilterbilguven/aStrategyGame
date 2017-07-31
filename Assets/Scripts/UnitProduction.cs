@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Takes reference from button and sends the prefab to building to spawn it.
+/// </summary>
 public class UnitProduction : MonoBehaviour
 {
 	public SelectMouse building;

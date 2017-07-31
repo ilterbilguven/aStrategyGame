@@ -5,6 +5,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
+
+/// <summary>
+/// When you clicked on a building. Info menu will be filled with this script.
+/// </summary>
 public class Information : ContentFiller
 {
 

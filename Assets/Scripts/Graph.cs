@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Graph
 {
-
+	/// <summary>
+	/// For A* search
+	/// Converts coordinate system to 2D array.
+	/// </summary>
 	public int rows = 0;
 	public int cols = 0;
 	public Node[] Nodes;
@@ -27,7 +30,7 @@ public class Graph
 			for (int j = 0; j < cols; j++)
 			{
 				var node = Nodes[cols * i + j];
-				node.pos = new Vector2(j, rows - i - 1);
+				node.pos = new Vector2(j, rows - i - 1); //magic happens
 				
 				if (grid[i, j] == 1)
 				{

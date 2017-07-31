@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+/// <summary>
+/// Production menu and information menu uses this structure.
+/// </summary>
 public abstract class ContentFiller : MonoBehaviour
 {
 	[SerializeField]

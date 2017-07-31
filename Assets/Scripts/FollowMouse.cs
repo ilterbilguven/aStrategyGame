@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using NUnit.Framework.Constraints;
 using UnityEngine;
 
+/// <summary>
+/// Takes building from "BuildingPicker".
+/// Left Click: Build and update grid
+/// Right Click: Abort and destroy
+/// </summary>
 public class FollowMouse : MonoBehaviour
 {
 
-	public Vector3 rawInput;
-	public Vector3 roundedOutput;
+	private Vector3 rawInput;
+	private Vector3 roundedOutput;
 	public GameObject building;
 
 	private GameObject pMenu;
@@ -45,7 +50,7 @@ public class FollowMouse : MonoBehaviour
 
 	private void Drop()
 	{
-		if (building.GetComponentInChildren<Building>().canBeBuilt())
+		if (building.GetComponentInChildren<Building>().dropCheck)
 		{
 			building.GetComponentInChildren<Building>().updateGrid = true;
 			building = null;

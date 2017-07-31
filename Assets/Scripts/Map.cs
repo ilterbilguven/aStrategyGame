@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// To update grid for boundries of the map
+/// Other buildings will update this grid 
+/// </summary>
 public class Map : MonoBehaviour {
 
 	public int[,] _map;
@@ -37,7 +41,10 @@ public class Map : MonoBehaviour {
 		//StartCoroutine(show());
 		//StartCoroutine(shownodes());
 	}
-
+	/// <summary>
+	/// debug purposes
+	/// </summary>
+	/// <returns></returns>
 	IEnumerator show()
 	{
 		yield return new WaitForSeconds(10);

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// After selecting a building in production menu, building will attach itself to the mouse by sending it to the "FollowMouse".
+/// </summary>
 public class BuildingPicker : MonoBehaviour
 {
 	private FollowMouse fm;

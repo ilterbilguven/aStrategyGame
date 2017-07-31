@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// All buildings need this
+/// </summary>
 public abstract class Building : MonoBehaviour
 {
-	[SerializeField]
-	private bool dropCheck = true;
+	
+	public bool dropCheck = true;
 	public bool updateGrid = false;
 	public int[,] map;
 
@@ -17,6 +20,9 @@ public abstract class Building : MonoBehaviour
 
 	}
 
+	/// <summary>
+	/// Update grid
+	/// </summary>
 	void Update()
 	{
 		if (updateGrid)
@@ -34,10 +40,10 @@ public abstract class Building : MonoBehaviour
 	
 	}
 
-	public bool canBeBuilt()
-	{
-		return dropCheck;
-	}
+	/// <summary>
+	/// To block player build a building on another building
+	/// </summary>
+	/// <param name="collision"></param>
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
@@ -53,7 +59,10 @@ public abstract class Building : MonoBehaviour
 	{
 		if (collision.CompareTag("Building")) dropCheck = true;
 	}
-
+	/// <summary>
+	/// If a building have something to spawn, it will implement this.
+	/// </summary>
+	/// <param name="unit"></param>
 	public abstract void Spawn(GameObject unit);
 
 	}

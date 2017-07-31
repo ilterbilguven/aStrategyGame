@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// For A* search
+/// </summary>
 public class Node {
 
-public List<Node> AdjacentNodes = new List<Node>();
+	public List<Node> AdjacentNodes = new List<Node>();
 	public Node PreviousNode = null;
 	public string label = "";
 	public float Gscore = Mathf.Infinity;
