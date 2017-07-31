@@ -1,6 +1,11 @@
 Hi,
 
-I started with 2017.2b4 but, I faced with too many crashes that blocked me to continue, I switched to 2017.1f1, but got some problems.
+I used 2017.2b4 but, I faced with too many crashes/bugs. I insisted on but, I dealt with Unity itself rather that solving the problems. It consumed my time a lot. I couldn't meet some of the requirements.
+
+Move Soldier:
+Left Click to select.
+Right Click to move it.
+
 
 Known Issues:
 - Units spawns bottom-right corner of the object. It can move but, not automatically. If already there is a unit, it may duplicate.
