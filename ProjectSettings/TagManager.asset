@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Building
   - Unit
+  - Border
   layers:
   - Default
   - TransparentFX

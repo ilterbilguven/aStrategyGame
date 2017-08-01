@@ -47,17 +47,17 @@ public abstract class Building : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.CompareTag("Building")) dropCheck = false;
+		dropCheck = false;
 	}
 
 	private void OnTriggerStay2D(Collider2D collision)
 	{
-		if (collision.CompareTag("Building")) dropCheck = false;
+		dropCheck = false;
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)
 	{
-		if (collision.CompareTag("Building")) dropCheck = true;
+		dropCheck = true;
 	}
 	/// <summary>
 	/// If a building have something to spawn, it will implement this.

@@ -19,21 +19,25 @@ public class SelectMouse : MonoBehaviour
 			//Destroy(GameObject.Find("InformationMenu"));
 			if (Physics2D.OverlapPoint(pos) == null)
 			{
-				//selected = null;
+				selected = null;
 				Debug.Log("null is selected.");
+				Destroy(GameObject.Find("InformationMenu"));
 			}
 			else
 			{
-				Destroy(GameObject.Find("InformationMenu"));
 				selected = Physics2D.OverlapPoint(pos).transform.parent.gameObject;
-				Debug.Log(selected.GetComponentInChildren<Collider2D>().tag + " is selected.");
-
+				Debug.Log(pos);
 				switch (selected.GetComponentInChildren<Collider2D>().tag)
 				{
 					case "Building":
+						Destroy(GameObject.Find("InformationMenu"));
+						Debug.Log(selected.GetComponentInChildren<Collider2D>().tag + " is selected.");
 						var o = Instantiate(infoPrefab, GameObject.Find("Canvas").transform);
 						o.name = infoPrefab.name;
 						GameObject.Find("InformationMenu").GetComponentInChildren<Information>().title.text = selected.name;
+						break;
+					case "Border":
+						Debug.Log(selected.GetComponentInChildren<Collider2D>().tag + " is selected.");
 						break;
 				}
 			}
@@ -41,11 +45,11 @@ public class SelectMouse : MonoBehaviour
 
 		if (selected != null && Input.GetMouseButtonDown(1))
 		{
-			Destroy(GameObject.Find("InformationMenu"));
 			Debug.Log(selected.GetComponentInChildren<Collider2D>().tag);
 			switch (selected.GetComponentInChildren<Collider2D>().tag)
 			{
 				case "Unit":
+					Destroy(GameObject.Find("InformationMenu"));
 					var moveunit = selected.GetComponent<MoveUnit>();
 					var startPoint = moveunit.map.cols * (moveunit.map.rows - Mathf.RoundToInt(selected.transform.position.y) - 1) + Mathf.RoundToInt(selected.transform.position.x);
 

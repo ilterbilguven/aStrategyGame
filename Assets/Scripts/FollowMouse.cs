@@ -14,12 +14,13 @@ public class FollowMouse : MonoBehaviour
 	private Vector3 rawInput;
 	private Vector3 roundedOutput;
 	public GameObject building;
-
+	private SelectMouse sm;
 	private GameObject pMenu;
 
 	void Start()
 	{
 		pMenu = GameObject.Find("ProductionMenu");
+		sm = GetComponent<SelectMouse>();
 	}
 	void Update ()
 	{
@@ -44,6 +45,8 @@ public class FollowMouse : MonoBehaviour
 
 	public void Pick(GameObject b)
 	{
+		Destroy(GameObject.Find("InformationMenu"));
+		sm.enabled = false;
 		building = b;
 		pMenu.SetActive(false);
 	}
@@ -52,6 +55,7 @@ public class FollowMouse : MonoBehaviour
 	{
 		if (building.GetComponentInChildren<Building>().dropCheck)
 		{
+			sm.enabled = true;
 			building.GetComponentInChildren<Building>().updateGrid = true;
 			building = null;
 			pMenu.SetActive(true);
@@ -63,6 +67,7 @@ public class FollowMouse : MonoBehaviour
 	{
 		if (building != null)
 		{
+			sm.enabled = true;
 			Destroy(building);
 			pMenu.SetActive(true);
 		}
