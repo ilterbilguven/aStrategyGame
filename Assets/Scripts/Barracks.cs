@@ -12,23 +12,36 @@ public class Barracks : Building
 	/// <param name="unit"></param>
 	public override void Spawn(string unit)
 	{
-		_unit = Instantiate((GameObject)Resources.Load(
-			"Prefabs/Units/" + transform.parent.gameObject.name + "/" + unit));
+		if (Physics2D.OverlapPoint(transform.parent.Find("SpawnPoint").position))
+		{
+			GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Spawn Point is occupied. Assign a new spawn point.");
+		}
+		else if (!transform.parent.Find("SpawnPoint").gameObject.activeSelf)
+		{
+			GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Spawn Point isn't assigned. Assign a spawn point.");
 
-		//_unit.transform.position = transform.parent.Find("SpawnPoint").position;
-		_unit.transform.position = transform.parent.position;
+		}
+		else
+		{
+			_unit = Instantiate((GameObject)Resources.Load(
+				"Prefabs/Units/" + transform.parent.gameObject.name + "/" + unit));
 
-		var moveunit = _unit.GetComponent<MoveUnit>();
-		EmptyGrid();
-		moveunit.Init();
+			//_unit.transform.position = transform.parent.Find("SpawnPoint").position;
+			_unit.transform.position = transform.parent.position;
 
-		var startPoint = moveunit.map.cols * (moveunit.map.rows - Mathf.RoundToInt(_unit.transform.position.y) - 1) +
-		                 Mathf.RoundToInt(_unit.transform.position.x);
+			var moveunit = _unit.GetComponent<MoveUnit>();
+			EmptyGrid();
+			moveunit.Init();
 
-		var endPoint = moveunit.map.cols * (moveunit.map.rows - Mathf.RoundToInt(transform.parent.Find("SpawnPoint").position.y) - 1) + Mathf.RoundToInt(transform.parent.Find("SpawnPoint").position.x);
+			var startPoint = moveunit.map.cols * (moveunit.map.rows - Mathf.RoundToInt(_unit.transform.position.y) - 1) +
+			                 Mathf.RoundToInt(_unit.transform.position.x);
 
-		moveunit.search.Start(moveunit.graph.Nodes[startPoint], moveunit.graph.Nodes[endPoint]);
-		updateGrid = true;
+			var endPoint = moveunit.map.cols * (moveunit.map.rows - Mathf.RoundToInt(transform.parent.Find("SpawnPoint").position.y) - 1) + Mathf.RoundToInt(transform.parent.Find("SpawnPoint").position.x);
+
+			moveunit.search.Start(moveunit.graph.Nodes[startPoint], moveunit.graph.Nodes[endPoint]);
+			updateGrid = true;
+		}
+		
 
 	}
 }

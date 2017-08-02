@@ -47,16 +47,22 @@ public abstract class Building : MonoBehaviour
 	/// <param name="collision"></param>
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
+		GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Can't build there. Area is not empty.");
+
 		dropCheck = false;
 	}
 
 	private void OnTriggerStay2D(Collider2D collision)
 	{
+		GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Can't build there. Area is not empty.");
+
 		dropCheck = false;
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)
 	{
+		GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Can't build there. Area is not empty.");
+
 		dropCheck = true;
 	}
 

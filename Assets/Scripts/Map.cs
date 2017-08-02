@@ -15,21 +15,8 @@ public class Map : MonoBehaviour
 	private void Awake()
 	{
 		_map = new int[rows, cols];
-		for (var i = 0; i < rows; i++)
-		for (var j = 0; j < cols; j++)
-		{
-			if (i == 0 || i == rows - 1)
-			{
-				_map[i, j] = 1;
-				continue;
-			}
-			if (j == 0 || j == cols - 1)
-			{
-				_map[i, j] = 1;
-				continue;
-			}
-			_map[i, j] = 0;
-		}
+		for (var i = 0; i < rows; i++) for (var j = 0; j < cols; j++) _map[i, j] = 0;
+		
 	}
 
 	private void Start()

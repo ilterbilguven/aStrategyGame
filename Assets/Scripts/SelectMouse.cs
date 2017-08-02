@@ -35,6 +35,10 @@ public class SelectMouse : MonoBehaviour
 					case "Border":
 						Debug.Log(selected.GetComponentInChildren<Collider2D>().tag + " is selected.");
 						break;
+					case "Unit":
+						Destroy(GameObject.Find("InformationMenu"));
+						Debug.Log(selected.GetComponentInChildren<Collider2D>().tag + " is selected.");
+						break;
 				}
 			}
 
@@ -44,7 +48,12 @@ public class SelectMouse : MonoBehaviour
 			switch (selected.GetComponentInChildren<Collider2D>().tag)
 			{
 				case "Unit":
-					Destroy(GameObject.Find("InformationMenu"));
+					if (checkOccupation())
+					{
+						GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Can't go there. Area is occupied.");
+						break;
+					}
+
 					var moveunit = selected.GetComponent<MoveUnit>();
 					moveunit.Init();
 					var startPoint = moveunit.map.cols * (moveunit.map.rows - Mathf.RoundToInt(selected.transform.position.y) - 1) +
@@ -63,10 +72,21 @@ public class SelectMouse : MonoBehaviour
 					break;
 
 				case "Building":
+					if (checkOccupation())
+					{
+						GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Can't assign there as a spawn point. Area is occupied.");
+						break;
+					}
+					selected.transform.Find("SpawnPoint").gameObject.SetActive(true);
 					selected.transform.Find("SpawnPoint").position = new Vector3(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y));
 
 					break;
 			}
 		}
+	}
+
+	bool checkOccupation()
+	{
+		return Physics2D.OverlapPoint(pos);
 	}
 }

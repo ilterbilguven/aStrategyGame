@@ -42,6 +42,10 @@ public class Search
 		isStartInitialized = true;
 	}
 
+	/// <summary>
+	/// manhattan distance
+	/// </summary>
+	/// <param name="currentNode"></param>
 	public void CalculateCost(Node currentNode)
 	{
 		currentNode.Gscore = Mathf.RoundToInt(Mathf.Abs((currentNode.pos - startNode.pos).x) +
@@ -57,6 +61,7 @@ public class Search
 		if (reachable.Count == 0)
 		{
 			finished = true;
+			GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Can't go there. There is no way to go.");
 			return;
 		}
 
