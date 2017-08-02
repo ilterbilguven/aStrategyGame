@@ -2,7 +2,6 @@
 using UnityEngine;
 
 /// <summary>
-///   To update grid for boundries of the map
 ///   Other buildings will update this grid
 /// </summary>
 public class Map : MonoBehaviour

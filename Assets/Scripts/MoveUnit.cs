@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// initializes the a* search and its dependencies
+/// then applies the path if there is exists
+/// </summary>
 public class MoveUnit : MonoBehaviour
 {
 	public Graph graph;
-
 	public Map map;
 	public Search search;
 
@@ -19,7 +22,6 @@ public class MoveUnit : MonoBehaviour
 	public void Init()
 	{
 		map = GameObject.Find("Map").GetComponent<Map>();
-
 		graph = new Graph(map._map);
 		search = new Search(graph);
 	}

@@ -16,8 +16,8 @@ public class FollowMouse : MonoBehaviour
 
 	private void Start()
 	{
-		pMenu = GameObject.Find("ProductionMenu");
-		sm = GetComponent<SelectMouse>();
+		pMenu = GameObject.Find("ProductionMenu"); // to disable the unit and building contols when build mode is used.
+		sm = GetComponent<SelectMouse>(); // to disable the unit and building contols when build mode is used.
 	}
 
 	private void Update()

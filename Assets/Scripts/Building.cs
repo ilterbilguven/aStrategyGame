@@ -24,6 +24,9 @@ public abstract class Building : MonoBehaviour
 			FillGrid();
 	}
 
+	/// <summary>
+	/// filling the grid to represent the building
+	/// </summary>
 	private void FillGrid()
 	{
 		for (var i = 0; i < Mathf.RoundToInt(GetComponent<Collider2D>().bounds.size.x); i++)
@@ -32,6 +35,9 @@ public abstract class Building : MonoBehaviour
 				Mathf.RoundToInt(transform.parent.position.x) - i] = 1;
 	}
 
+	/// <summary>
+	/// emptying the grid
+	/// </summary>
 	public void EmptyGrid()
 	{
 		updateGrid = false;
@@ -44,7 +50,7 @@ public abstract class Building : MonoBehaviour
 	/// <summary>
 	///   To block player build a building on another building
 	/// </summary>
-	/// <param name="collision"></param>
+	/// <param name="collision">some collider</param>
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Can't build there. Area is not empty.");
@@ -52,6 +58,10 @@ public abstract class Building : MonoBehaviour
 		dropCheck = false;
 	}
 
+	/// <summary>
+	///   To block player build a building on another building
+	/// </summary>
+	/// <param name="collision">some collider</param>
 	private void OnTriggerStay2D(Collider2D collision)
 	{
 		GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Can't build there. Area is not empty.");
@@ -59,6 +69,10 @@ public abstract class Building : MonoBehaviour
 		dropCheck = false;
 	}
 
+	/// <summary>
+	///   To block player build a building on another building
+	/// </summary>
+	/// <param name="collision">some collider</param>
 	private void OnTriggerExit2D(Collider2D collision)
 	{
 		GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Can't build there. Area is not empty.");
@@ -70,6 +84,6 @@ public abstract class Building : MonoBehaviour
 	/// <summary>
 	///   If a building have something to spawn, it will implement this.
 	/// </summary>
-	/// <param name="unit"></param>
+	/// <param name="unit">name of the unit</param>
 	public abstract void Spawn(string unit);
 }

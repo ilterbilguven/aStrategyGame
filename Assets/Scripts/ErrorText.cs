@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class ErrorText : MonoBehaviour {
 
+	// start with empty text
 	void Start()
 	{
 		GetComponent<Text>().text = String.Empty;
@@ -13,6 +14,11 @@ public class ErrorText : MonoBehaviour {
 		StartCoroutine(ShowError());
 	}
 
+	/// <summary>
+	/// checks if there is an error.
+	/// if there is an error message, show it for 1 sec.
+	/// </summary>
+	/// <returns></returns>
 	IEnumerator ShowError()
 	{
 		while (true)
@@ -26,6 +32,11 @@ public class ErrorText : MonoBehaviour {
 		}
 	}
 
+
+	/// <summary>
+	/// to show the error in the text field.
+	/// </summary>
+	/// <param name="s">error text</param>
 	public void ChangeMessage(string s)
 	{
 		GetComponent<Text>().text = s;

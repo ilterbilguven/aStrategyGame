@@ -6,17 +6,16 @@ public class Barracks : Building
 
 
 	/// <summary>
-	///   I wanted to make "unit" move to spawn point after initialized, but I got a reference problem, and couldn't figured it
-	///   out.
+	///  spawns the unit and moves it to the spawn point.
 	/// </summary>
-	/// <param name="unit"></param>
+	/// <param name="unit">name of the unit</param>
 	public override void Spawn(string unit)
 	{
-		if (Physics2D.OverlapPoint(transform.parent.Find("SpawnPoint").position))
+		if (Physics2D.OverlapPoint(transform.parent.Find("SpawnPoint").position)) //checks there is something.
 		{
 			GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Spawn Point is occupied. Assign a new spawn point.");
 		}
-		else if (!transform.parent.Find("SpawnPoint").gameObject.activeSelf)
+		else if (!transform.parent.Find("SpawnPoint").gameObject.activeSelf) // checks if the spawn point is assigned.
 		{
 			GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Spawn Point isn't assigned. Assign a spawn point.");
 
@@ -30,7 +29,7 @@ public class Barracks : Building
 			_unit.transform.position = transform.parent.position;
 
 			var moveunit = _unit.GetComponent<MoveUnit>();
-			EmptyGrid();
+			EmptyGrid(); // emptying the grid to allow movement for the spawned unit.
 			moveunit.Init();
 
 			var startPoint = moveunit.map.cols * (moveunit.map.rows - Mathf.RoundToInt(_unit.transform.position.y) - 1) +
@@ -39,7 +38,7 @@ public class Barracks : Building
 			var endPoint = moveunit.map.cols * (moveunit.map.rows - Mathf.RoundToInt(transform.parent.Find("SpawnPoint").position.y) - 1) + Mathf.RoundToInt(transform.parent.Find("SpawnPoint").position.x);
 
 			moveunit.search.Start(moveunit.graph.Nodes[startPoint], moveunit.graph.Nodes[endPoint]);
-			updateGrid = true;
+			updateGrid = true; // filling the grid again
 		}
 		
 
