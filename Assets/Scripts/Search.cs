@@ -57,15 +57,14 @@ public class Search
 	}
 
 	/// <summary>
-	/// calculating the manhattan distance 
+	/// calculating the euclid distance 
 	/// </summary>
 	/// <param name="currentNode">given node</param>
 	public void CalculateCost(Node currentNode)
 	{
-		currentNode.Gscore = Mathf.RoundToInt(Mathf.Abs((currentNode.pos - startNode.pos).x) +
-		                                      Mathf.Abs((currentNode.pos - startNode.pos).y));
-		currentNode.Hscore = Mathf.RoundToInt(Mathf.Abs((currentNode.pos - goalNode.pos).x) +
-		                                      Mathf.Abs((currentNode.pos - goalNode.pos).y));
+		currentNode.Gscore = Vector2.Distance(currentNode.pos, startNode.pos);
+
+		currentNode.Hscore = Vector2.Distance(currentNode.pos, goalNode.pos);
 	}
 
 	/// <summary>
