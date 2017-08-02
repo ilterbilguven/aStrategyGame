@@ -1,14 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class PowerPlant : Building
-{/// <summary>
-/// PowerPlant has nothing to spawn.
-/// </summary>
-/// <param name="unit"></param>
-	public override void Spawn(GameObject unit)
+{
+	/// <summary>
+	///   PowerPlant has nothing to spawn.
+	/// </summary>
+	/// <param name="unit"></param>
+	public override void Spawn(string unit)
 	{
-		throw new System.NotImplementedException();
+		throw new NotImplementedException();
 	}
 }

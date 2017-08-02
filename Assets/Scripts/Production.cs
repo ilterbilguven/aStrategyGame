@@ -1,23 +1,20 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 /// <summary>
-/// Fills Production Menu
+///   Fills Production Menu
 /// </summary>
 public class Production : ContentFiller
 {
-
-	void Start()
+	private void Start()
 	{
 		StartCoroutine(Fill());
 	}
 
 	internal override IEnumerator Fill()
 	{
-		foreach (Object o in Resources.LoadAll("Prefabs/Buildings", typeof(GameObject)))
+		foreach (var o in Resources.LoadAll("Prefabs/Buildings", typeof(GameObject)))
 		{
 			var _button = Instantiate(prefab, transform);
 			_button.transform.localPosition = new Vector3(0, startingPoint, 0);

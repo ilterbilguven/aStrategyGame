@@ -1,46 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework.Constraints;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// Takes building from "BuildingPicker".
-/// Left Click: Build and update grid
-/// Right Click: Abort and destroy
+///   Takes building from "BuildingPicker".
+///   Left Click: Build and update grid
+///   Right Click: Abort and destroy
 /// </summary>
 public class FollowMouse : MonoBehaviour
 {
+	public GameObject building;
+	private GameObject pMenu;
 
 	private Vector3 rawInput;
 	private Vector3 roundedOutput;
-	public GameObject building;
 	private SelectMouse sm;
-	private GameObject pMenu;
 
-	void Start()
+	private void Start()
 	{
 		pMenu = GameObject.Find("ProductionMenu");
 		sm = GetComponent<SelectMouse>();
 	}
-	void Update ()
+
+	private void Update()
 	{
 		if (building != null)
 		{
 			rawInput = Input.mousePosition;
 			rawInput.z = building.transform.position.z - Camera.main.transform.position.z;
-			roundedOutput = new Vector3(Mathf.RoundToInt(Camera.main.ScreenToWorldPoint(rawInput).x), Mathf.RoundToInt(Camera.main.ScreenToWorldPoint(rawInput).y), Mathf.RoundToInt(Camera.main.ScreenToWorldPoint(rawInput).z));
+			roundedOutput = new Vector3(Mathf.RoundToInt(Camera.main.ScreenToWorldPoint(rawInput).x),
+				Mathf.RoundToInt(Camera.main.ScreenToWorldPoint(rawInput).y),
+				Mathf.RoundToInt(Camera.main.ScreenToWorldPoint(rawInput).z));
 			building.transform.localPosition = roundedOutput;
 
 			if (Input.GetMouseButtonDown(0))
-			{
 				Drop();
-			}
 			if (Input.GetMouseButtonDown(1))
-			{
 				DestroyBuilding();
-			}
 		}
-	
 	}
 
 	public void Pick(GameObject b)
@@ -60,7 +55,6 @@ public class FollowMouse : MonoBehaviour
 			building = null;
 			pMenu.SetActive(true);
 		}
-		
 	}
 
 	public void DestroyBuilding()
@@ -71,11 +65,5 @@ public class FollowMouse : MonoBehaviour
 			Destroy(building);
 			pMenu.SetActive(true);
 		}
-		
 	}
-
-
-
-
-
 }

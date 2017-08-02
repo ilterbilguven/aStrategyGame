@@ -1,18 +1,16 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class MoveUnit : MonoBehaviour
 {
+	public Graph graph;
 
 	public Map map;
 	public Search search;
-	public Graph graph;
 
-	void Start()
+	private void Start()
 	{
-		Init();
+		//Init();
 		//search.Start(graph.Nodes[(int) (map.cols * transform.position.x + transform.position.y)], graph.Nodes[1765]);
 		//Debug.Break();
 		StartCoroutine(move());
@@ -26,14 +24,10 @@ public class MoveUnit : MonoBehaviour
 		search = new Search(graph);
 	}
 
-	void Update()
+	private void Update()
 	{
-
-		if (search.isStartInitialized && !search.finished)
-		{
-			
+		if (search != null && search.isStartInitialized && !search.finished)
 			search.Step();
-		}
 	}
 
 	public IEnumerator move()
@@ -41,12 +35,12 @@ public class MoveUnit : MonoBehaviour
 		while (true)
 		{
 			yield return new WaitForSeconds(0.1f); // If I don't put this, Unity hangs out like forever.
-			if (search.finished)
+			if (search != null && search.finished)
 			{
 				Debug.Log("finished");
-				foreach (Node node in search.path)
+				foreach (var node in search.path)
 				{
-					yield return new WaitForSeconds(0.01f);
+					yield return new WaitForSeconds(0.05f);
 					//Debug.Break();
 					//Debug.Log(node.pos.y + " " + node.pos.x);
 					//transform.Translate(new Vector3(node.pos.y, node.pos.x, transform.position.z));

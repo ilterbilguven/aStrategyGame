@@ -1,22 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// To select objects with mouse and control them.
+///   To select objects with mouse and control them.
 /// </summary>
 public class SelectMouse : MonoBehaviour
 {
 	public GameObject infoPrefab;
-	public GameObject selected;
 	private Vector3 pos;
-	
-	void Update ()
+	public GameObject selected;
+
+	private void Update()
 	{
 		pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		if (Input.GetMouseButtonDown(0))
-		{
-			//Destroy(GameObject.Find("InformationMenu"));
 			if (Physics2D.OverlapPoint(pos) == null)
 			{
 				selected = null;
@@ -41,7 +37,6 @@ public class SelectMouse : MonoBehaviour
 						break;
 				}
 			}
-		}
 
 		if (selected != null && Input.GetMouseButtonDown(1))
 		{
@@ -51,26 +46,27 @@ public class SelectMouse : MonoBehaviour
 				case "Unit":
 					Destroy(GameObject.Find("InformationMenu"));
 					var moveunit = selected.GetComponent<MoveUnit>();
-					var startPoint = moveunit.map.cols * (moveunit.map.rows - Mathf.RoundToInt(selected.transform.position.y) - 1) + Mathf.RoundToInt(selected.transform.position.x);
+					moveunit.Init();
+					var startPoint = moveunit.map.cols * (moveunit.map.rows - Mathf.RoundToInt(selected.transform.position.y) - 1) +
+					                 Mathf.RoundToInt(selected.transform.position.x);
 
 					var endPoint = moveunit.map.cols * (moveunit.map.rows - Mathf.RoundToInt(pos.y) - 1) + Mathf.RoundToInt(pos.x);
 
-					Debug.Log(selected.transform.position + " = " + startPoint + "; " + pos + " = " + endPoint + "; length: " + moveunit.graph.Nodes.Length);
+					Debug.Log(selected.transform.position + " = " + startPoint + "; " + pos + " = " + endPoint + "; length: " +
+					          moveunit.graph.Nodes.Length);
 
 
 					//Debug.Break();
+
 					moveunit.search.Start(moveunit.graph.Nodes[startPoint], moveunit.graph.Nodes[endPoint]);
-					print(moveunit.search.startNode.pos);
-					print(moveunit.search.goalNode.pos);
-					foreach (Node node in moveunit.search.path)
-					{
-						print(node.pos);
-					}
+
+					break;
+
+				case "Building":
+					selected.transform.Find("SpawnPoint").position = new Vector3(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y));
 
 					break;
 			}
 		}
-
-
 	}
 }

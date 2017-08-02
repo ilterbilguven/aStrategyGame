@@ -1,24 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
-/// A* search
+///   A* search
 /// </summary>
 public class Search
 {
+	public List<Node> explored;
+	public bool finished;
+	public Node goalNode;
 
 	public Graph graph;
-	public List<Node> reachable;
-	public List<Node> explored;
-	public List<Node> path;
-	public Node startNode;
-	public Node goalNode;
+	public bool isStartInitialized;
 	public int iterations;
-	public bool finished;
-	public bool isStartInitialized = false;
+	public List<Node> path;
+	public List<Node> reachable;
+	public Node startNode;
+
 	public Search(Graph _graph)
 	{
 		graph = _graph;
@@ -39,25 +37,23 @@ public class Search
 		path = new List<Node>();
 		iterations = 0;
 
-		for (int i = 0; i < graph.Nodes.Length; i++)
-		{
+		for (var i = 0; i < graph.Nodes.Length; i++)
 			graph.Nodes[i].Clear();
-		}
 		isStartInitialized = true;
 	}
 
 	public void CalculateCost(Node currentNode)
 	{
-		currentNode.Gscore = Mathf.RoundToInt(Mathf.Abs((currentNode.pos - startNode.pos).x) + Mathf.Abs((currentNode.pos - startNode.pos).y));
-		currentNode.Hscore = Mathf.RoundToInt(Mathf.Abs((currentNode.pos - goalNode.pos).x) + Mathf.Abs((currentNode.pos - goalNode.pos).y));
+		currentNode.Gscore = Mathf.RoundToInt(Mathf.Abs((currentNode.pos - startNode.pos).x) +
+		                                      Mathf.Abs((currentNode.pos - startNode.pos).y));
+		currentNode.Hscore = Mathf.RoundToInt(Mathf.Abs((currentNode.pos - goalNode.pos).x) +
+		                                      Mathf.Abs((currentNode.pos - goalNode.pos).y));
 	}
 
 	public void Step()
 	{
 		if (path.Count > 0)
-		{
 			return;
-		}
 		if (reachable.Count == 0)
 		{
 			finished = true;
@@ -71,7 +67,7 @@ public class Search
 		{
 			while (node != null)
 			{
-				path.Insert(0,node);
+				path.Insert(0, node);
 				node = node.PreviousNode;
 			}
 			finished = true;
@@ -81,18 +77,14 @@ public class Search
 		reachable.Remove(node);
 		explored.Add(node);
 
-		foreach (Node t in node.AdjacentNodes)
-		{
-			AddAdjacent(node,t);
-		}
+		foreach (var t in node.AdjacentNodes)
+			AddAdjacent(node, t);
 	}
 
 	public void AddAdjacent(Node node, Node adjacent)
 	{
-		if (FindNode(adjacent, explored) ||  FindNode(adjacent, reachable))
-		{
+		if (FindNode(adjacent, explored) || FindNode(adjacent, reachable))
 			return;
-		}
 		CalculateCost(adjacent);
 		adjacent.PreviousNode = node;
 		reachable.Add(adjacent);
@@ -105,13 +97,9 @@ public class Search
 
 	public int GetNodeIndex(Node node, List<Node> list)
 	{
-		for (int i = 0; i < list.Count; i++)
-		{
-			if (node==list[i])
-			{
+		for (var i = 0; i < list.Count; i++)
+			if (node == list[i])
 				return i;
-			}
-		}
 
 		return -1;
 	}
@@ -119,19 +107,16 @@ public class Search
 	public Node ChoseNode()
 	{
 		//Debug.Break();
-		float _cost = Mathf.Infinity;
+		var _cost = Mathf.Infinity;
 		var _node = new Node();
-		
-		foreach (Node node in reachable)
-		{
+
+		foreach (var node in reachable)
 			if (node.Gscore + node.Hscore < _cost)
 			{
 				_node = node;
 				_cost = node.Gscore + node.Hscore;
 			}
-		}
-		
+
 		return _node;
 	}
-
 }
