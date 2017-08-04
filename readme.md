@@ -1,17 +1,37 @@
-Hi,
+aStrategyGame is a demo game project which has 3 main features: Building Production, Unit Production, Unit Movement
 
-I started with 2017.0.2b4 but, I faced with too many crashes/bugs. I insisted on but, I dealt with Unity itself rather that solving the problems. It consumed my time a lot. I couldn't meet some of the requirements.
-Now it is based on 2017.0.1p2
+Building Production:
+You can create buildings in the game map by using production (left) menu.
 
+Unit Production:
+You can create units in the game map by using production (right) menu.
+For that, you need to select a building that has units. 
+Then, right click on the game map to assign a spawn point.
+After that, you can create units.
 
-Move Soldier:
-Left Click to select.
-Right Click to move it.
+Unit Movement:
+Select a unit by left click on the game map. Then right click on the game map to move it.
+Unit will find the shorthest path by using A* search algorithm.
 
-Building:
-Right Click to assign a new spawnpoint.
+---
+
+Production Menu gets the prefabs in the Assets/Resources/Buildings folder and shows them.
+Unit Production Menu will show units if there is some prefabs in the Assets/Resources/Units/*BuildingName* folder.
+
+Building Structure:
+
+Building (gameObject)
+|-- Sprite
+|-- Collider (also there is a kinematic rigidbody and a script inherited Building class.)
+
+Unit Structure:
+Unit (gameObject) [also there is a MoveUnit script that handles the movement of the unit]
+|-- Sprite
+|-- Collider
+
+---
 
 Known Issues:
-- Design patterns are poorly implemented. First I tried to solve it before optimize it, but solution took a lot of time than expected.
+- Design patterns are poorly implemented.
 - Aspect ratio is 16:9, and the grid is 32*27
 - Spawn point is not shown visually.
