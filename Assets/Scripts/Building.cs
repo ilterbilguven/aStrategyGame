@@ -9,6 +9,8 @@ public abstract class Building : MonoBehaviour
 	public int[,] map;
 	public bool updateGrid;
 
+	public GameObject infoMenu;
+
 	internal void Start()
 	{
 		map = GameObject.Find("Map").GetComponent<Map>()._map;
@@ -86,4 +88,12 @@ public abstract class Building : MonoBehaviour
 	/// </summary>
 	/// <param name="unit">name of the unit</param>
 	public abstract void Spawn(string unit);
+
+	internal virtual void OnMouseDown()
+	{
+		SelectMouse.instance.clearDelegate();
+		SelectMouse.instance.selected = transform.parent.gameObject;
+
+		myCanvas.instance.informationMenu.SetActive(true);
+	}
 }

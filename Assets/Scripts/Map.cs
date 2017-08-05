@@ -44,7 +44,7 @@ public class Map : MonoBehaviour
 	}
 	//	{
 	//	foreach (Node node in nodes)
-	//	var nodes = GameObject.Find("Soldier").GetComponent<MoveUnit>().graph.Nodes;
+	//	var nodes = GameObject.Find("Soldier").GetComponent<Unit>().graph.Nodes;
 	//	yield return new WaitForSeconds(1);
 	//{
 

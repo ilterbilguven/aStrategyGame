@@ -40,7 +40,7 @@ public class FollowMouse : MonoBehaviour
 
 	public void Pick(GameObject b)
 	{
-		Destroy(GameObject.Find("InformationMenu"));
+		//Destroy(GameObject.Find("InformationMenu"));
 		sm.enabled = false;
 		building = b;
 		pMenu.SetActive(false);
