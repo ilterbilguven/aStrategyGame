@@ -9,8 +9,6 @@ public abstract class Building : MonoBehaviour
 	public int[,] map;
 	public bool updateGrid;
 
-	public GameObject infoMenu;
-
 	internal void Start()
 	{
 		map = GameObject.Find("Map").GetComponent<Map>()._map;
@@ -98,4 +96,6 @@ public abstract class Building : MonoBehaviour
 
 		myCanvas.instance.informationMenu.SetActive(true);
 	}
+
+
 }

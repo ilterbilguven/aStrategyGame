@@ -11,11 +11,9 @@ public class Unit : MonoBehaviour
 	public Map map;
 	public Search search;
 
-	public Information infoMenu;
-
 	private void Start()
 	{
-		Init();
+		//Init();
 		//search.Start(graph.Nodes[(int) (map.cols * transform.position.x + transform.position.y)], graph.Nodes[1765]);
 		//Debug.Break();
 		StartCoroutine(move());
@@ -64,12 +62,12 @@ public class Unit : MonoBehaviour
 		myCanvas.instance.informationMenu.SetActive(false);
 	}
 
-	void startSearch(Vector3 pos)
+	 public void startSearch(Vector3 pos)
 	{
-		Debug.Log("bu mu");
-		//Init();
-		var startPoint = map.cols * (map.rows - Mathf.RoundToInt(transform.parent.position.y) - 1) +
-		                 Mathf.RoundToInt(transform.parent.position.x);
+		Init();
+
+		Debug.Log(pos);
+		var startPoint = map.cols * (map.rows - (int)transform.parent.position.y - 1) + (int)transform.parent.position.x;
 
 		var endPoint = map.cols * (map.rows - (int)pos.y - 1) + (int)pos.x;
 
