@@ -8,23 +8,31 @@ using UnityEngine.UI;
 /// </summary>
 public class Information : ContentFiller
 {
-	[SerializeField] internal Text sampleText;
-
+	[SerializeField] private Text sampleText;
+	[SerializeField] private Image sampleImage;
 
 
 	void OnEnable()
 	{
 		var title =  Instantiate(sampleText, transform);
 		title.text = SelectMouse.instance.selected.name;
-		startingPoint -= title.GetComponent<RectTransform>().rect.height;
+		var image = Instantiate(sampleImage, transform);
+		image.sprite = SelectMouse.instance.selected.GetComponentInChildren<SpriteRenderer>().sprite;
+
+		bool IsProductionTextCreated = false;
 
 		foreach (var o in Resources.LoadAll("Prefabs/Units/" + title.text, typeof(GameObject)))
 		{
-			Debug.Log("hoayda");
+			if (!IsProductionTextCreated)
+			{
+				var productionText = Instantiate(sampleText, transform);
+				productionText.text = "Production";
+				IsProductionTextCreated = true;
+			}
+			
 			var _button = Instantiate(prefab, transform);
 			_button.transform.localPosition = new Vector3(0, startingPoint, 0);
 			_button.GetComponent<Button>().name = ((GameObject)o).name;
-			_button.GetComponentInChildren<Text>().text = ((GameObject)o).name;
 			startingPoint -= _button.GetComponent<RectTransform>().rect.height;
 		}
 	}
