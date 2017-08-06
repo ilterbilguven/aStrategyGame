@@ -32,7 +32,7 @@ public class SelectMouse : MonoBehaviour
 	void Update()
 	{
 		pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		pos = new Vector3(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y), Mathf.RoundToInt(pos.z)); // get the real integer position
+		pos = new Vector3(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y), 0); // get the real 2D integer position
 		if (Input.GetMouseButtonDown(0))
 		{
 			if (Physics2D.OverlapPoint(pos) == null)
