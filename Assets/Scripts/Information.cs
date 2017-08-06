@@ -8,28 +8,19 @@ using UnityEngine.UI;
 /// </summary>
 public class Information : ContentFiller
 {
-	[SerializeField] internal Text title;
+	[SerializeField] internal Text sampleText;
 
-	public static Information instance { get; private set; }
-
-	void Awake()
-	{
-		if (instance != null && instance != this)
-		{
-			Destroy(this);
-		}
-		else
-		{
-			instance = this;
-		}
-	}
 
 
 	void OnEnable()
 	{
+		var title =  Instantiate(sampleText, transform);
 		title.text = SelectMouse.instance.selected.name;
+		startingPoint -= title.GetComponent<RectTransform>().rect.height;
+
 		foreach (var o in Resources.LoadAll("Prefabs/Units/" + title.text, typeof(GameObject)))
 		{
+			Debug.Log("hoayda");
 			var _button = Instantiate(prefab, transform);
 			_button.transform.localPosition = new Vector3(0, startingPoint, 0);
 			_button.GetComponent<Button>().name = ((GameObject)o).name;
@@ -44,6 +35,7 @@ public class Information : ContentFiller
 		{
 			Debug.Log(child.name);
 			Destroy(child.gameObject);
+			startingPoint = 0;
 		}
 	}
 
@@ -52,10 +44,10 @@ public class Information : ContentFiller
 		while (true)
 		{
 			yield return new WaitForSeconds(0.1f);
-			Debug.Log(title.text);
-			if (title.text != string.Empty)
+			Debug.Log(sampleText.text);
+			if (sampleText.text != string.Empty)
 			{
-				foreach (var o in Resources.LoadAll("Prefabs/Units/" + title.text, typeof(GameObject)))
+				foreach (var o in Resources.LoadAll("Prefabs/Units/" + sampleText.text, typeof(GameObject)))
 				{
 					var _button = Instantiate(prefab, transform);
 					_button.transform.localPosition = new Vector3(0, startingPoint, 0);
