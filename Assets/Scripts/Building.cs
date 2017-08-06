@@ -91,6 +91,8 @@ public abstract class Building : MonoBehaviour
 
 	internal virtual void OnMouseDown()
 	{
+		myCanvas.instance.informationMenu.SetActive(false);
+
 		SelectMouse.instance.clearDelegate();
 		SelectMouse.instance.selected = transform.parent.gameObject;
 
