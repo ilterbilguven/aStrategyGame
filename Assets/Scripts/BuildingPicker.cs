@@ -10,6 +10,13 @@ public class BuildingPicker : MonoBehaviour
 
 	[SerializeField] private GameObject temp_building;
 
+	//public Vector2 v;
+
+	private void Update()
+	{
+		//v = transform.position;
+	}
+
 	public void Send()
 	{
 		fm = GameObject.Find("MouseScript").GetComponent<FollowMouse>();
