@@ -189,7 +189,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropCheck: 1
   updateGrid: 0
-  infoMenu: {fileID: 0}
+  _unit: {fileID: 0}
+  moveunit: {fileID: 0}
   spawnPoint: {fileID: 1398050398900038}
 --- !u!212 &212648049542233820
 SpriteRenderer:

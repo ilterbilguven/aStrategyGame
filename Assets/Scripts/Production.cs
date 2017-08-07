@@ -33,7 +33,7 @@ public class Production : ContentFiller
 		var _contentSizeFitter = GetComponent<ContentSizeFitter>();
 
 		//_gridLayoutGroup.enabled = false; 
-		// Previous line screwed buttons. Normally, it shouldn't have. Because, when I disable it on the editor manually, there is no problem. Thus, buttons' alignment may have problems.
+		// Previous line screwed buttons. Normally, it shouldn't have. Because, when I disable it on the editor manually, there is no problem. Thus, buttons' alignment may have problems in editor/game.
 		_contentSizeFitter.enabled = false;
 
 		paddingY = _gridLayoutGroup.spacing.y;
@@ -63,6 +63,7 @@ public class Production : ContentFiller
 			SetLastChildren();
 		}
 
+		GetComponent<RectTransform>().anchoredPosition = Vector2.zero; // try to fix alignment problem in game.
 
 		//StartCoroutine(Fill());
 		// Since list is static, filling from the asset folder is disabled.

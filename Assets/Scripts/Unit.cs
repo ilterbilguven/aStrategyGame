@@ -64,19 +64,41 @@ public class Unit : MonoBehaviour
 
 	 public void startSearch(Vector3 pos)
 	{
+		var finish = pos;
+
+		if (Physics2D.OverlapPoint(pos) != null)
+		{
+			Debug.Log(Physics2D.OverlapPoint(pos).gameObject.name);
+			//Debug.Break();
+
+			Debug.Log("previous: " + finish);
+			finish = findNewFinish(pos);
+			Debug.Log("now: " + finish);
+		}
+
+		
 		Init();
 
-		Debug.Log(pos);
+		Debug.Log(finish);
 		var startPoint = map.cols * (map.rows - (int)transform.parent.position.y - 1) + (int)transform.parent.position.x;
 
-		var endPoint = map.cols * (map.rows - (int)pos.y - 1) + (int)pos.x;
+		var endPoint = map.cols * (map.rows - (int)finish.y - 1) + (int)finish.x;
 
-		Debug.Log(transform.parent.position + " = " + startPoint + "; " + pos + " = " + endPoint + "; length: " +
-		          graph.Nodes.Length);
+		//Debug.Log(transform.parent.position + " = " + startPoint + "; " + pos + " = " + endPoint + "; length: " + graph.Nodes.Length);
 
 
 		//Debug.Break();
 
 		search.Start(graph.Nodes[startPoint], graph.Nodes[endPoint]); // move the unit.
+	}
+
+	Vector3 findNewFinish(Vector3 pos)
+	{
+		var _pos = new Vector3(pos.x + Random.Range(-1,2), pos.y + Random.Range(-1,2), pos.z);
+		if (Physics2D.OverlapPoint(_pos) == null)
+		{
+			return _pos;
+		}
+		return findNewFinish(_pos);
 	}
 }

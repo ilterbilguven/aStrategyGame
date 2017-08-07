@@ -14,11 +14,7 @@ public class Barracks : Building
 	/// <param name="unit">name of the unit</param>
 	public override void Spawn(string unit)
 	{
-		if (Physics2D.OverlapPoint(spawnPoint.transform.position)) //checks there is something.
-		{
-			GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Spawn Point is occupied. Assign a new spawn point.");
-		}
-		else if (!spawnPoint.activeSelf) // checks if the spawn point is assigned.
+		if (!spawnPoint.activeSelf) // checks if the spawn point is assigned.
 		{
 			GameObject.Find("ErrorText").GetComponent<ErrorText>()
 				.ChangeMessage("Spawn Point isn't assigned. Assign a spawn point.");
@@ -40,15 +36,31 @@ public class Barracks : Building
 		}
 	}
 
+	private void Update()
+	{
+		if (SelectMouse.instance.selected != null)
+		{
+			if (SelectMouse.instance.selected.transform.position != transform.position)
+			{
+				spawnPoint.SetActive(false);
+			}
+		}
+		else
+		{
+			spawnPoint.SetActive(false);
+		}
+
+	}
+
 	internal override void OnMouseDown()
 	{
 		base.OnMouseDown();
 		SelectMouse.onClick += SpawnPoint;
+		spawnPoint.SetActive(true);
 	}
 
 	void SpawnPoint(Vector3 pos)
 	{
-		spawnPoint.SetActive(true);
 		spawnPoint.transform.position = pos;
 	}
 

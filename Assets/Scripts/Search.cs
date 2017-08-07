@@ -20,7 +20,6 @@ public class Search
 	public bool isStartInitialized;
 
 	public int iterations;
-
 	
 	/// <summary>
 	/// constructor
@@ -50,6 +49,8 @@ public class Search
 		explored = new List<Node>();
 		path = new List<Node>();
 		iterations = 0;
+		finished = false;
+
 
 		for (var i = 0; i < graph.Nodes.Length; i++)
 			graph.Nodes[i].Clear();
