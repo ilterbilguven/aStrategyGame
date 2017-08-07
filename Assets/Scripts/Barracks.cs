@@ -16,9 +16,7 @@ public class Barracks : Building
 	{
 		if (!spawnPoint.activeSelf) // checks if the spawn point is assigned.
 		{
-			GameObject.Find("ErrorText").GetComponent<ErrorText>()
-				.ChangeMessage("Spawn Point isn't assigned. Assign a spawn point.");
-
+			ErrorText.instance.ChangeMessage("Spawn Point isn't assigned. Assign a spawn point.");
 		}
 		else
 		{
@@ -36,7 +34,7 @@ public class Barracks : Building
 		}
 	}
 
-	private void Update()
+	private void LateUpdate()
 	{
 		if (SelectMouse.instance.selected != null)
 		{
@@ -55,8 +53,12 @@ public class Barracks : Building
 	internal override void OnMouseDown()
 	{
 		base.OnMouseDown();
-		SelectMouse.onClick += SpawnPoint;
-		spawnPoint.SetActive(true);
+		if (updateGrid)
+		{
+			SelectMouse.onClick += SpawnPoint;
+			spawnPoint.SetActive(true);
+		}
+
 	}
 
 	void SpawnPoint(Vector3 pos)

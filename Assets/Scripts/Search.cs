@@ -78,7 +78,7 @@ public class Search
 		if (reachable.Count == 0) // means there is no path.
 		{
 			finished = true;
-			GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Can't go there. There is no way to go.");
+			ErrorText.instance.ChangeMessage("Can't go there. There is no way to go.");
 			return;
 		}
 

@@ -11,8 +11,21 @@ public class Map : MonoBehaviour
 	public int cols = 27;
 	public int rows = 32;
 
+	public static Map instance { get; private set; }
+
+	
+
 	private void Awake()
 	{
+		if (instance != null && instance != this)
+		{
+			Destroy(this);
+		}
+		else
+		{
+			instance = this;
+		}
+
 		_map = new int[rows, cols];
 		for (var i = 0; i < rows; i++) for (var j = 0; j < cols; j++) _map[i, j] = 0;
 		

@@ -6,6 +6,21 @@ using UnityEngine.UI;
 
 public class ErrorText : MonoBehaviour {
 
+
+	public static ErrorText instance { get; private set; }
+
+	void Awake()
+	{
+		if (instance != null && instance != this)
+		{
+			Destroy(this);
+		}
+		else
+		{
+			instance = this;
+		}
+	}
+
 	// start with empty text
 	void Start()
 	{

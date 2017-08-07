@@ -14,9 +14,23 @@ public class FollowMouse : MonoBehaviour
 	private Vector3 roundedOutput;
 	private SelectMouse sm;
 
+	public static FollowMouse instance { get; private set; }
+
+	void Awake()
+	{
+		if (instance != null && instance != this)
+		{
+			Destroy(this);
+		}
+		else
+		{
+			instance = this;
+		}
+	}
+
 	private void Start()
 	{
-		pMenu = GameObject.Find("ProductionMenu"); // to disable the unit and building contols when build mode is used.
+		pMenu = myCanvas.instance.productionMenu; // to disable the unit and building contols when build mode is used.
 		sm = GetComponent<SelectMouse>(); // to disable the unit and building contols when build mode is used.
 	}
 

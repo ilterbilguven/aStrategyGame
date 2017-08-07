@@ -11,7 +11,7 @@ public abstract class Building : MonoBehaviour
 
 	internal void Start()
 	{
-		map = GameObject.Find("Map").GetComponent<Map>()._map;
+		map = Map.instance._map;
 		//Debug.Log(transform.parent.name + " position: " + transform.parent.position + "; collider size  x y : " + Mathf.RoundToInt(GetComponent<Collider2D>().bounds.size.x) + " " + Mathf.RoundToInt(GetComponent<Collider2D>().bounds.size.y));
 	}
 
@@ -51,32 +51,37 @@ public abstract class Building : MonoBehaviour
 	///   To block player build a building on another building
 	/// </summary>
 	/// <param name="collision">some collider</param>
-	private void OnTriggerEnter2D(Collider2D collision)
+	internal void OnTriggerEnter2D(Collider2D collision)
 	{
-		GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Can't build there. Area is not empty.");
+		if (!collision.CompareTag("Unit"))
+		{
+			ErrorText.instance.ChangeMessage("Can't build there. Area is not empty.");
 
-		dropCheck = false;
+			dropCheck = false;
+		}
 	}
 
 	/// <summary>
 	///   To block player build a building on another building
 	/// </summary>
 	/// <param name="collision">some collider</param>
-	private void OnTriggerStay2D(Collider2D collision)
+	internal void OnTriggerStay2D(Collider2D collision)
 	{
-		GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Can't build there. Area is not empty.");
+		if (!collision.CompareTag("Unit"))
+		{
+			ErrorText.instance.ChangeMessage("Can't build there. Area is not empty.");
 
-		dropCheck = false;
+			dropCheck = false;
+		}
 	}
 
 	/// <summary>
 	///   To block player build a building on another building
 	/// </summary>
 	/// <param name="collision">some collider</param>
-	private void OnTriggerExit2D(Collider2D collision)
+	internal void OnTriggerExit2D(Collider2D collision)
 	{
-		GameObject.Find("ErrorText").GetComponent<ErrorText>().ChangeMessage("Can't build there. Area is not empty.");
-
+		
 		dropCheck = true;
 	}
 
@@ -89,12 +94,16 @@ public abstract class Building : MonoBehaviour
 
 	internal virtual void OnMouseDown()
 	{
-		myCanvas.instance.informationMenu.SetActive(false);
+		if (updateGrid)
+		{
+			myCanvas.instance.informationMenu.SetActive(false);
 
-		SelectMouse.instance.clearDelegate();
-		SelectMouse.instance.selected = transform.parent.gameObject;
+			SelectMouse.instance.clearDelegate();
+			SelectMouse.instance.selected = transform.parent.gameObject;
 
-		myCanvas.instance.informationMenu.SetActive(true);
+			myCanvas.instance.informationMenu.SetActive(true);
+		}
+
 	}
 
 

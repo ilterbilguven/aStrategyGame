@@ -21,7 +21,7 @@ public class Unit : MonoBehaviour
 
 	public void Init()
 	{
-		map = GameObject.Find("Map").GetComponent<Map>();
+		map = Map.instance;
 		graph = new Graph(map._map);
 		search = new Search(graph);
 	}

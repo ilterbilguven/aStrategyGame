@@ -19,7 +19,7 @@ public class BuildingPicker : MonoBehaviour
 
 	public void Send()
 	{
-		fm = GameObject.Find("MouseScript").GetComponent<FollowMouse>();
+		fm = FollowMouse.instance;
 
 
 		temp_building = null;
