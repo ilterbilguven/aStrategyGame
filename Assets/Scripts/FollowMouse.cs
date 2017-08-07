@@ -14,24 +14,24 @@ public class FollowMouse : MonoBehaviour
 	private Vector3 roundedOutput;
 	private SelectMouse sm;
 
+
+	/// <summary>
+	/// singleton
+	/// </summary>
 	public static FollowMouse instance { get; private set; }
 
-	void Awake()
+	private void Awake()
 	{
 		if (instance != null && instance != this)
-		{
 			Destroy(this);
-		}
 		else
-		{
 			instance = this;
-		}
 	}
 
 	private void Start()
 	{
 		pMenu = myCanvas.instance.productionMenu; // to disable the unit and building contols when build mode is used.
-		sm = GetComponent<SelectMouse>(); // to disable the unit and building contols when build mode is used.
+		sm = SelectMouse.instance; // to disable the unit and building contols when build mode is used.
 	}
 
 	private void Update()

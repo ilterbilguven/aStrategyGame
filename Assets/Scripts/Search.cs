@@ -7,12 +7,8 @@ using UnityEngine;
 public class Search
 {
 	public List<Node> explored;
-	public List<Node> path;
-	public List<Node> reachable;
 
 	public bool finished;
-
-	public Node startNode;
 	public Node goalNode;
 
 	public Graph graph;
@@ -20,9 +16,13 @@ public class Search
 	public bool isStartInitialized;
 
 	public int iterations;
-	
+	public List<Node> path;
+	public List<Node> reachable;
+
+	public Node startNode;
+
 	/// <summary>
-	/// constructor
+	///   constructor
 	/// </summary>
 	/// <param name="_graph"></param>
 	public Search(Graph _graph)
@@ -31,7 +31,7 @@ public class Search
 	}
 
 	/// <summary>
-	/// initialize the search by adding first node that is start
+	///   initialize the search by adding first node that is start
 	/// </summary>
 	/// <param name="start">start point</param>
 	/// <param name="goal">end point</param>
@@ -58,7 +58,7 @@ public class Search
 	}
 
 	/// <summary>
-	/// calculating the euclid distance 
+	///   calculating the euclid distance
 	/// </summary>
 	/// <param name="currentNode">given node</param>
 	public void CalculateCost(Node currentNode)
@@ -69,7 +69,7 @@ public class Search
 	}
 
 	/// <summary>
-	/// Search happens 
+	///   Search happens
 	/// </summary>
 	public void Step()
 	{
@@ -84,7 +84,7 @@ public class Search
 
 		iterations++;
 
-		var node = ChoseNode(); 
+		var node = ChoseNode();
 		if (node == goalNode) // to check if it is end point.
 		{
 			while (node != null)
@@ -101,16 +101,18 @@ public class Search
 		// this node is explored now. 
 
 		foreach (var t in node.AdjacentNodes)
-			AddAdjacent(node, t); 
+			AddAdjacent(node, t);
 	}
+
 	/// <summary>
-	/// add this node's adjacent nodes to the reachable to continue.
+	///   add this node's adjacent nodes to the reachable to continue.
 	/// </summary>
 	/// <param name="node">this node</param>
 	/// <param name="adjacent">this node's adjacent nodes</param>
 	public void AddAdjacent(Node node, Node adjacent)
 	{
-		if (FindNode(adjacent, explored) || FindNode(adjacent, reachable)) // if there are already in explored or reachable, skip.
+		if (FindNode(adjacent, explored) || FindNode(adjacent, reachable)
+		) // if there are already in explored or reachable, skip.
 			return;
 		CalculateCost(adjacent);
 		adjacent.PreviousNode = node;
@@ -118,7 +120,7 @@ public class Search
 	}
 
 	/// <summary>
-	/// check if the node is the given list
+	///   check if the node is the given list
 	/// </summary>
 	/// <param name="node">given node</param>
 	/// <param name="list">given list</param>
@@ -127,8 +129,9 @@ public class Search
 	{
 		return GetNodeIndex(node, list) >= 0;
 	}
+
 	/// <summary>
-	/// get node's index in the list
+	///   get node's index in the list
 	/// </summary>
 	/// <param name="node">given node</param>
 	/// <param name="list">given list</param>
@@ -143,7 +146,7 @@ public class Search
 	}
 
 	/// <summary>
-	/// choosing the least cost in the reachable list.
+	///   choosing the least cost in the reachable list.
 	/// </summary>
 	/// <returns>node whose cost is the least</returns>
 	public Node ChoseNode()

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,35 +7,41 @@ using UnityEngine.UI;
 /// </summary>
 public class Information : ContentFiller
 {
+	[SerializeField] private Image sampleImage; // image of building
 	[SerializeField] private Text sampleText;
-	[SerializeField] private Image sampleImage;
 
-
-	void OnEnable()
+	/// <summary>
+	/// When it is enabled, shows the details
+	/// </summary>
+	private void OnEnable()
 	{
-		var title =  Instantiate(sampleText, transform);
-		title.text = SelectMouse.instance.selected.name;
+		var title = Instantiate(sampleText, transform);
+		title.text = SelectMouse.instance.selected.name; // title
+
 		var image = Instantiate(sampleImage, transform);
-		image.sprite = SelectMouse.instance.selected.GetComponentInChildren<SpriteRenderer>().sprite;
+		image.sprite = SelectMouse.instance.selected.GetComponentInChildren<SpriteRenderer>().sprite; // image
 
-		bool IsProductionTextCreated = false;
+		var IsProductionTextCreated = false; 
 
-		foreach (var o in Resources.LoadAll("Prefabs/Units/" + title.text, typeof(GameObject)))
+		foreach (var o in Resources.LoadAll("Prefabs/Units/" + title.text, typeof(GameObject))) // if there is somethnig to spawn
 		{
-			if (!IsProductionTextCreated)
+			if (!IsProductionTextCreated) // "Production" text 
 			{
 				var productionText = Instantiate(sampleText, transform);
 				productionText.text = "Production";
 				IsProductionTextCreated = true;
 			}
-			
+
 			var _button = Instantiate(prefab, transform);
 			_button.transform.localPosition = new Vector3(0, startingPoint, 0);
-			_button.GetComponent<Button>().name = ((GameObject)o).name;
+			_button.GetComponent<Button>().name = ((GameObject) o).name;
 			startingPoint -= _button.GetComponent<RectTransform>().rect.height;
 		}
 	}
 
+	/// <summary>
+	/// when it is disabled, clear everything.
+	/// </summary>
 	private void OnDisable()
 	{
 		foreach (Transform child in transform)

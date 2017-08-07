@@ -3,24 +3,32 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-///   Fills Production Menu
+/// Fills Production Menu
+/// Also has inifite scroll
+/// 
+/// What I wanted to do is;
+/// Add buttons from assets folder with respect to Grid Layout Group and Content Size Fitter to give a tidied look.
+/// Then disable Grid Layout Group and Content Size Fitter to be able to obtain all buttons' anchorposition.
+/// And, after a certain threshold buttons will change their position.
+/// But 46th line, screwes the buttons. Thus, I made it from static source. But, still it number of objects in the pool depends on screen height. 
+/// To refresh the size of the object pool, restart is needed.
+/// 
+/// 
 /// </summary>
 public class Production : ContentFiller
 {
+	public float cellSizeY; // height of the buttons
+
+	private GameObject[] firstTwoChildren;
+
+	private GameObject[] lastTwoChildren;
+
+
+	public float paddingY; // distance between buttons
+
+	public float UpperLimit; // top of the recttransform 
 
 	private Vector3[] v;
-	public float UpperLimit;
-
-
-	public float paddingY;
-	public float cellSizeY;
-
-
-	public GameObject[] firstTwoChildren;
-	public GameObject[] lastTwoChildren;
-
-	public Vector2 l1;
-	public Vector2 l2;
 
 
 	private void Start()
@@ -40,23 +48,25 @@ public class Production : ContentFiller
 		cellSizeY = _gridLayoutGroup.cellSize.y;
 
 		firstTwoChildren = new GameObject[2];
-		firstTwoChildren[0] = transform.GetChild(0).gameObject;
-		firstTwoChildren[1] = transform.GetChild(1).gameObject;
-
 		lastTwoChildren = new GameObject[2];
-		lastTwoChildren[0] = transform.GetChild(transform.childCount - 2).gameObject;
-		lastTwoChildren[1] = transform.GetChild(transform.childCount - 1).gameObject;
 
-		for (int i = 0; i < (Screen.height / cellSizeY + 1) - 2; i++)
+		SetFirstChildren();
+		SetLastChildren();
+
+		for (var i = 0; i < Screen.height / cellSizeY + 1 - 2; i++) // to decide the size of object pool with respect to screen height.
 		{
 			var clone = Instantiate(firstTwoChildren[0], transform);
-			clone.GetComponent<RectTransform>().anchoredPosition = new Vector2(lastTwoChildren[0].GetComponent<RectTransform>().anchoredPosition.x, lastTwoChildren[0].GetComponent<RectTransform>().anchoredPosition.y - cellSizeY - paddingY);
+			clone.GetComponent<RectTransform>().anchoredPosition =
+				new Vector2(lastTwoChildren[0].GetComponent<RectTransform>().anchoredPosition.x,
+					lastTwoChildren[0].GetComponent<RectTransform>().anchoredPosition.y - cellSizeY - paddingY);
 			clone.name = firstTwoChildren[0].name;
 			clone.transform.SetAsLastSibling();
 
 
 			clone = Instantiate(firstTwoChildren[1], transform);
-			clone.GetComponent<RectTransform>().anchoredPosition = new Vector2(lastTwoChildren[1].GetComponent<RectTransform>().anchoredPosition.x, lastTwoChildren[1].GetComponent<RectTransform>().anchoredPosition.y - cellSizeY - paddingY);
+			clone.GetComponent<RectTransform>().anchoredPosition =
+				new Vector2(lastTwoChildren[1].GetComponent<RectTransform>().anchoredPosition.x,
+					lastTwoChildren[1].GetComponent<RectTransform>().anchoredPosition.y - cellSizeY - paddingY);
 			clone.name = firstTwoChildren[1].name;
 			clone.transform.SetAsLastSibling();
 
@@ -72,45 +82,47 @@ public class Production : ContentFiller
 	private void Update()
 	{
 
-		l1 = lastTwoChildren[0].transform.position;
-		l2 = lastTwoChildren[1].transform.position;
-
-		if (firstTwoChildren[0].transform.position.y > UpperLimit + paddingY)
+		if (firstTwoChildren[0].transform.position.y > UpperLimit + paddingY) // for exceeding top of the canvas
 		{
-			firstTwoChildren[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(firstTwoChildren[0].GetComponent<RectTransform>().anchoredPosition.x, transform.GetChild(transform.childCount - 1).GetComponent<RectTransform>().anchoredPosition.y - cellSizeY - paddingY);
+			firstTwoChildren[0].GetComponent<RectTransform>().anchoredPosition =
+				new Vector2(firstTwoChildren[0].GetComponent<RectTransform>().anchoredPosition.x,
+					transform.GetChild(transform.childCount - 1).GetComponent<RectTransform>().anchoredPosition.y - cellSizeY -
+					paddingY);
 			firstTwoChildren[0].transform.SetAsLastSibling();
 
 
-			firstTwoChildren[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(firstTwoChildren[1].GetComponent<RectTransform>().anchoredPosition.x, transform.GetChild(transform.childCount - 1).GetComponent<RectTransform>().anchoredPosition.y);
+			firstTwoChildren[1].GetComponent<RectTransform>().anchoredPosition =
+				new Vector2(firstTwoChildren[1].GetComponent<RectTransform>().anchoredPosition.x,
+					transform.GetChild(transform.childCount - 1).GetComponent<RectTransform>().anchoredPosition.y);
 			firstTwoChildren[1].transform.SetAsLastSibling();
 
 			SetFirstChildren();
 			SetLastChildren();
 		}
-		else if (lastTwoChildren[0].transform.position.y < -2)
+		else if (lastTwoChildren[0].transform.position.y < -2) // for exceeding bottom of the canvas
 		{
-			
-
-			lastTwoChildren[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(lastTwoChildren[1].GetComponent<RectTransform>().anchoredPosition.x, firstTwoChildren[1].GetComponent<RectTransform>().anchoredPosition.y + cellSizeY + paddingY);
+			lastTwoChildren[1].GetComponent<RectTransform>().anchoredPosition =
+				new Vector2(lastTwoChildren[1].GetComponent<RectTransform>().anchoredPosition.x,
+					firstTwoChildren[1].GetComponent<RectTransform>().anchoredPosition.y + cellSizeY + paddingY);
 			lastTwoChildren[1].transform.SetAsFirstSibling();
-		
-			lastTwoChildren[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(lastTwoChildren[0].GetComponent<RectTransform>().anchoredPosition.x, firstTwoChildren[0].GetComponent<RectTransform>().anchoredPosition.y + cellSizeY + paddingY);
+
+			lastTwoChildren[0].GetComponent<RectTransform>().anchoredPosition =
+				new Vector2(lastTwoChildren[0].GetComponent<RectTransform>().anchoredPosition.x,
+					firstTwoChildren[0].GetComponent<RectTransform>().anchoredPosition.y + cellSizeY + paddingY);
 			lastTwoChildren[0].transform.SetAsFirstSibling();
-		
+
 			SetFirstChildren();
 			SetLastChildren();
 		}
-
 	}
 
-	void SetFirstChildren()
+	private void SetFirstChildren()
 	{
 		firstTwoChildren[0] = transform.GetChild(0).gameObject;
 		firstTwoChildren[1] = transform.GetChild(1).gameObject;
-		
-		}
+	}
 
-	void SetLastChildren()
+	private void SetLastChildren()
 	{
 		lastTwoChildren[0] = transform.GetChild(transform.childCount - 2).gameObject;
 		lastTwoChildren[1] = transform.GetChild(transform.childCount - 1).gameObject;

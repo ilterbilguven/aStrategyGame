@@ -11,24 +11,21 @@ public class Map : MonoBehaviour
 	public int cols = 27;
 	public int rows = 32;
 
+	/// <summary>
+	/// singleton
+	/// </summary>
 	public static Map instance { get; private set; }
 
-	
 
 	private void Awake()
 	{
 		if (instance != null && instance != this)
-		{
 			Destroy(this);
-		}
 		else
-		{
 			instance = this;
-		}
 
 		_map = new int[rows, cols];
 		for (var i = 0; i < rows; i++) for (var j = 0; j < cols; j++) _map[i, j] = 0;
-		
 	}
 
 	private void Start()
@@ -55,14 +52,14 @@ public class Map : MonoBehaviour
 			line = string.Empty;
 		}
 	}
-	//	{
-	//	foreach (Node node in nodes)
-	//	var nodes = GameObject.Find("Soldier").GetComponent<Unit>().graph.Nodes;
-	//	yield return new WaitForSeconds(1);
-	//{
+	//		print(node.pos + " ");
 
 	//IEnumerator shownodes()
-	//		print(node.pos + " ");
+	//{
+	//	yield return new WaitForSeconds(1);
+	//	var nodes = GameObject.Find("Soldier").GetComponent<Unit>().graph.Nodes;
+	//	foreach (Node node in nodes)
+	//	{
 	//	}
 	//}
 }

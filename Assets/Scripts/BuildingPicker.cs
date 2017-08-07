@@ -21,7 +21,6 @@ public class BuildingPicker : MonoBehaviour
 	{
 		fm = FollowMouse.instance;
 
-
 		temp_building = null;
 		temp_building = (GameObject) Instantiate(Resources.Load("Prefabs/Buildings/" + transform.gameObject.name));
 		temp_building.name = transform.gameObject.name;

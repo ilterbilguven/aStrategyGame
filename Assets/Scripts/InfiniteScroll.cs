@@ -5,46 +5,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 /// <summary>
-/// Infinite scroll view with automatic configuration 
-/// 
-/// Fields
-/// - InitByUSer - in case your scrollrect is populated from code, you can explicitly Initialize the infinite scroll after your scroll is ready
-/// by callin Init() method
-/// 
-/// Notes
-/// - doesn't work in both vertical and horizontal orientation at the same time.
-/// - in order to work it disables layout components and size fitter if present(automatically)
-/// 
+///   Infinite scroll view with automatic configuration
+///   Fields
+///   - InitByUSer - in case your scrollrect is populated from code, you can explicitly Initialize the infinite scroll
+///   after your scroll is ready
+///   by callin Init() method
+///   Notes
+///   - doesn't work in both vertical and horizontal orientation at the same time.
+///   - in order to work it disables layout components and size fitter if present(automatically)
 /// </summary>
 public class InfiniteScroll : MonoBehaviour
 {
-	//if true user will need to call Init() method manually (in case the contend of the scrollview is generated from code or requires special initialization)
-	[Tooltip("If false, will Init automatically, otherwise you need to call Init() method")]
-	public bool InitByUser = false;
-
-	public ScrollRect _scrollRect;
 	public ContentSizeFitter _contentSizeFitter;
-	public VerticalLayoutGroup _verticalLayoutGroup;
-	public HorizontalLayoutGroup _horizontalLayoutGroup;
+	public float _disableMarginX;
+	public float _disableMarginY;
 	public GridLayoutGroup _gridLayoutGroup;
-	public bool _isVertical = false;
-	public bool _isHorizontal = false;
-	public float _disableMarginX = 0;
-	public float _disableMarginY = 0;
-	public bool _hasDisabledGridComponents = false;
-	public List<RectTransform> items = new List<RectTransform>();
+	public bool _hasDisabledGridComponents;
+	public HorizontalLayoutGroup _horizontalLayoutGroup;
+	public bool _isHorizontal;
+	public bool _isVertical;
+
+	public int _itemCount;
 
 	public Vector2 _newAnchoredPosition = Vector2.zero;
+	public float _recordOffsetX;
+	public float _recordOffsetY;
+
+	public ScrollRect _scrollRect;
 
 	//TO DISABLE FLICKERING OBJECT WHEN SCROLL VIEW IS IDLE IN BETWEEN OBJECTS
 	public float _treshold = 100f;
 
-	public int _itemCount = 0;
-	public float _recordOffsetX = 0;
-	public float _recordOffsetY = 0;
+	public VerticalLayoutGroup _verticalLayoutGroup;
 
-	void Awake()
+	//if true user will need to call Init() method manually (in case the contend of the scrollview is generated from code or requires special initialization)
+	[Tooltip("If false, will Init automatically, otherwise you need to call Init() method")] public bool InitByUser;
+
+	public List<RectTransform> items = new List<RectTransform>();
+
+	private void Awake()
 	{
 		if (!InitByUser)
 			Init();
@@ -58,35 +59,23 @@ public class InfiniteScroll : MonoBehaviour
 			_scrollRect.onValueChanged.AddListener(OnScroll);
 			_scrollRect.movementType = ScrollRect.MovementType.Unrestricted;
 
-			for (int i = 0; i < _scrollRect.content.childCount; i++)
-			{
+			for (var i = 0; i < _scrollRect.content.childCount; i++)
 				items.Add(_scrollRect.content.GetChild(i).GetComponent<RectTransform>());
-			}
 			if (_scrollRect.content.GetComponent<VerticalLayoutGroup>() != null)
-			{
 				_verticalLayoutGroup = _scrollRect.content.GetComponent<VerticalLayoutGroup>();
-			}
 			if (_scrollRect.content.GetComponent<HorizontalLayoutGroup>() != null)
-			{
 				_horizontalLayoutGroup = _scrollRect.content.GetComponent<HorizontalLayoutGroup>();
-			}
 			if (_scrollRect.content.GetComponent<GridLayoutGroup>() != null)
-			{
 				_gridLayoutGroup = _scrollRect.content.GetComponent<GridLayoutGroup>();
-			}
 			if (_scrollRect.content.GetComponent<ContentSizeFitter>() != null)
-			{
 				_contentSizeFitter = _scrollRect.content.GetComponent<ContentSizeFitter>();
-			}
 
 			_isHorizontal = _scrollRect.horizontal;
 			_isVertical = _scrollRect.vertical;
 
 			if (_isHorizontal && _isVertical)
-			{
 				Debug.LogError(
 					"UI_InfiniteScroll doesn't support scrolling in both directions, plase choose one direction (horizontal or vertical)");
-			}
 
 			_itemCount = _scrollRect.content.childCount;
 		}
@@ -96,7 +85,7 @@ public class InfiniteScroll : MonoBehaviour
 		}
 	}
 
-	void DisableGridComponents()
+	private void DisableGridComponents()
 	{
 		if (_isVertical)
 		{
@@ -114,21 +103,13 @@ public class InfiniteScroll : MonoBehaviour
 		}
 
 		if (_verticalLayoutGroup)
-		{
 			_verticalLayoutGroup.enabled = false;
-		}
 		if (_horizontalLayoutGroup)
-		{
 			_horizontalLayoutGroup.enabled = false;
-		}
 		if (_contentSizeFitter)
-		{
 			_contentSizeFitter.enabled = false;
-		}
 		if (_gridLayoutGroup)
-		{
 			_gridLayoutGroup.enabled = false;
-		}
 		_hasDisabledGridComponents = true;
 	}
 
@@ -137,10 +118,9 @@ public class InfiniteScroll : MonoBehaviour
 		if (!_hasDisabledGridComponents)
 			DisableGridComponents();
 
-		for (int i = 0; i < items.Count; i++)
+		for (var i = 0; i < items.Count; i++)
 		{
 			if (_isHorizontal)
-			{
 				if (_scrollRect.transform.InverseTransformPoint(items[i].gameObject.transform.position).x >
 				    _disableMarginX + _treshold)
 				{
@@ -156,10 +136,8 @@ public class InfiniteScroll : MonoBehaviour
 					items[i].anchoredPosition = _newAnchoredPosition;
 					_scrollRect.content.GetChild(0).transform.SetAsLastSibling();
 				}
-			}
 
 			if (_isVertical)
-			{
 				if (_scrollRect.transform.InverseTransformPoint(items[i].gameObject.transform.position).y >
 				    _disableMarginY + _treshold)
 				{
@@ -175,7 +153,6 @@ public class InfiniteScroll : MonoBehaviour
 					items[i].anchoredPosition = _newAnchoredPosition;
 					_scrollRect.content.GetChild(0).transform.SetAsLastSibling();
 				}
-			}
 		}
 	}
 }

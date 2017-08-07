@@ -1,25 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class myCanvas : MonoBehaviour
 {
-
-	public GameObject productionMenu;
 	public GameObject informationMenu;
 
+	public GameObject productionMenu;
 
+	/// <summary>
+	/// to access information and production menu easily, made it singleton
+	/// </summary>
 	public static myCanvas instance { get; private set; }
 
-	void Awake()
+	private void Awake()
 	{
 		if (instance != null && instance != this)
-		{
 			Destroy(this);
-		}
 		else
-		{
 			instance = this;
-		}
 	}
 }

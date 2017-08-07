@@ -25,7 +25,7 @@ public abstract class Building : MonoBehaviour
 	}
 
 	/// <summary>
-	/// filling the grid to represent the building
+	///   filling the grid to represent the building
 	/// </summary>
 	private void FillGrid()
 	{
@@ -36,7 +36,7 @@ public abstract class Building : MonoBehaviour
 	}
 
 	/// <summary>
-	/// emptying the grid
+	///   emptying the grid
 	/// </summary>
 	public void EmptyGrid()
 	{
@@ -53,12 +53,9 @@ public abstract class Building : MonoBehaviour
 	/// <param name="collision">some collider</param>
 	internal void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (!collision.CompareTag("Unit"))
-		{
-			ErrorText.instance.ChangeMessage("Can't build there. Area is not empty.");
+		ErrorText.instance.ChangeMessage("Can't build there. Area is not empty.");
 
-			dropCheck = false;
-		}
+		dropCheck = false;
 	}
 
 	/// <summary>
@@ -67,12 +64,9 @@ public abstract class Building : MonoBehaviour
 	/// <param name="collision">some collider</param>
 	internal void OnTriggerStay2D(Collider2D collision)
 	{
-		if (!collision.CompareTag("Unit"))
-		{
-			ErrorText.instance.ChangeMessage("Can't build there. Area is not empty.");
+		ErrorText.instance.ChangeMessage("Can't build there. Area is not empty.");
 
-			dropCheck = false;
-		}
+		dropCheck = false;
 	}
 
 	/// <summary>
@@ -81,7 +75,6 @@ public abstract class Building : MonoBehaviour
 	/// <param name="collision">some collider</param>
 	internal void OnTriggerExit2D(Collider2D collision)
 	{
-		
 		dropCheck = true;
 	}
 
@@ -92,19 +85,20 @@ public abstract class Building : MonoBehaviour
 	/// <param name="unit">name of the unit</param>
 	public abstract void Spawn(string unit);
 
+
+	/// <summary>
+	/// If a building is left clicked
+	/// </summary>
 	internal virtual void OnMouseDown()
 	{
 		if (updateGrid)
 		{
-			myCanvas.instance.informationMenu.SetActive(false);
+			myCanvas.instance.informationMenu.SetActive(false); // to clear info menu
 
-			SelectMouse.instance.clearDelegate();
+			SelectMouse.instance.clearDelegate(); // to clear previous methods in the delegate
 			SelectMouse.instance.selected = transform.parent.gameObject;
 
-			myCanvas.instance.informationMenu.SetActive(true);
+			myCanvas.instance.informationMenu.SetActive(true); // to show info menu
 		}
-
 	}
-
-
 }
